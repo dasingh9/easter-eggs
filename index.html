@@ -3,6 +3,43 @@
 	<title>Easter Eggs</title>
 
 	<script>
+		window.onload = function() {
+			const divEaterEggs = 'easterEggs';
+			const numberOfEasterEggs = 200;
+			const shapeName = 'ellipse';
+			showShapes(divEaterEggs, shapeName, numberOfEasterEggs);
+		}
+
+		function showShapes(shapesContainerId, shapeName, numberOfShapes) {
+			let shapes = generateShapes(shapeName, numberOfShapes);
+			document.getElementById(shapesContainerId).innerHTML = shapes;
+			const timeoutPeriod = 300;
+			setTimeout(showShapes, timeoutPeriod, shapesContainerId, shapeName, numberOfShapes);
+		}
+
+		function generateShapes(shapeName, numberOfShapes) {
+			let shapesSvgCollection = '';
+			let colorCode = '';
+			for (let i = 0; i < numberOfShapes; i++) {
+				let randomCode = Math.round(0xffffff * Math.random()).toString(16);
+				let colorCode = '#' + '000000'.substring(0, (6 - randomCode.length)) + randomCode;
+				let shapeSvg = getShapeSvg(shapeName, colorCode);
+				shapesSvgCollection += shapeSvg;
+			}
+			return shapesSvgCollection;
+		}
+
+		function getShapeSvg(shapeName, colorCode) {
+			switch(shapeName) {
+				case 'ellipse':
+					return getEllipseSvg(colorCode);
+				case 'circle':
+					return getCircleSvg(colorCode);
+				default:
+					return 'ellipse';
+			}
+		}
+
 		function getEllipseSvg(colorCode) {
 			return `<svg height="140" width="350">
 				<ellipse cx="200" cy="80" rx="100" ry="50" style="fill:${colorCode};stroke:purple;stroke-width:2" />
@@ -10,22 +47,18 @@
 			</svg>`;
 		}
 
-		function showCircles(numberOfCircles) {
-			let circlesCollection = '';
-			for (let i = 0; i < numberOfCircles; i++) {
-				var randomCode = Math.round(0xffffff * Math.random()).toString(16);
-				var colorCode = "#" + "000000".substring(0, (6 - randomCode.length)) + randomCode;
-				var circle = getEllipseSvg(colorCode);
-				circlesCollection += circle;
-			}
-			document.getElementById("niceCircles").innerHTML = circlesCollection;
-			setTimeout(showCircles, 300, 200);
+		function getCircleSvg(colorCode) {
+			return `<svg height="140" width="140">
+				<circle cx="52" cy="52" r="50" style="fill:${colorCode};stroke:purple;stroke-width:2" />
+				Sorry, your browser does not support inline SVG.  
+			</svg>`;
 		}
 	</script>
+
 </head>
 
-<body onload="showCircles(200)">
-	<div id="niceCircles">
+<body>
+	<div id="easterEggs">
 	</div>
 </body>
 
