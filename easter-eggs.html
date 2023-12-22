@@ -1,35 +1,32 @@
 <html>
-
 <head>
-	<title>Hello World</title>
+	<title>Easter Eggs</title>
+
 	<script>
+		function getEllipseSvg(colorCode) {
+			return `<svg height="140" width="350">
+				<ellipse cx="200" cy="80" rx="100" ry="50" style="fill:${colorCode};stroke:purple;stroke-width:2" />
+				Sorry, your browser does not support inline SVG.  
+			</svg>`;
+		}
+
 		function showCircles(numberOfCircles) {
 			let circlesCollection = '';
 			for (let i = 0; i < numberOfCircles; i++) {
-				var randomCode=Math.round(0xffffff * Math.random()).toString(16);
-				var colorCode= "#" + "000000".substring(0,(6-randomCode.length)) + randomCode;
-				var circle = `<svg height="140" width="350">
-					<ellipse cx="200" cy="80" rx="100" ry="50" style="fill:${colorCode};stroke:purple;stroke-width:2" />
-					Sorry, your browser does not support inline SVG.  
-				</svg>`;
+				var randomCode = Math.round(0xffffff * Math.random()).toString(16);
+				var colorCode = "#" + "000000".substring(0, (6 - randomCode.length)) + randomCode;
+				var circle = getEllipseSvg(colorCode);
 				circlesCollection += circle;
 			}
 			document.getElementById("niceCircles").innerHTML = circlesCollection;
-			setTimeout(showCircles,300,200);
+			setTimeout(showCircles, 300, 200);
 		}
 	</script>
 </head>
+
 <body onload="showCircles(200)">
-	<h1>Lots of eggs!</h1>
-	<div id="staticCircles">
-		<svg height="140" width="350">
-			<ellipse cx="200" cy="80" rx="100" ry="50" style="fill:yellow;stroke:purple;stroke-width:2" />
-			Sorry, your browser does not support inline SVG.  
-		  </svg>
-	</div>
 	<div id="niceCircles">
 	</div>
-
 </body>
 
 </html>
